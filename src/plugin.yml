@@ -1,0 +1,14 @@
+name: LilyPad-Minigame-Lobby
+main: com.senither.lilypad.minigame.LilypadMinigameLobby
+version: 0.1
+description: Dynamic lilypad lobby system for minigames
+
+author: Senither
+authros: [Senither]
+
+depend: [LilyPad-Connect]
+
+commands:
+  lilypadminigame:
+    description: Lilypad minigame lobby main command
+    aliases: [lilypadgame, minigamelobby, gamelobby]

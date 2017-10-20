@@ -13,7 +13,6 @@ public class LilypadMinigameLobby extends JavaPlugin {
     private Connect connect;
     private NetworkManager network;
 
-
     @Override
     public void onEnable() {
         Plugin plugin = getServer().getPluginManager().getPlugin("LilyPad-Connect");

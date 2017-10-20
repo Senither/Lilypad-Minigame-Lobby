@@ -2,6 +2,7 @@ package com.senither.lilypad.minigame.network;
 
 import com.google.gson.Gson;
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
+import com.senither.lilypad.minigame.utils.Envoyer;
 import lilypad.client.connect.api.event.EventListener;
 import lilypad.client.connect.api.event.MessageEvent;
 import lilypad.client.connect.api.request.RequestException;
@@ -11,12 +12,17 @@ import lilypad.client.connect.api.result.FutureResult;
 import lilypad.client.connect.api.result.StatusCode;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 
 public class NetworkManager {
 
     private final LilypadMinigameLobby plugin;
     private final Gson gson;
+
+    private final Map<String, Server> servers = new HashMap<>();
 
     public NetworkManager(LilypadMinigameLobby plugin) {
         this.plugin = plugin;
@@ -30,7 +36,21 @@ public class NetworkManager {
         }
 
         try {
-            System.out.println(event.getSender() + " :: " + event.getMessageAsString());
+            String sender = event.getSender();
+            if (!servers.containsKey(sender)) {
+                Envoyer.getLogger().log(Level.INFO, "Minigame Network - \"{0}\" has just connected to the Minigame Network!", sender);
+                servers.put(sender, new Server(sender));
+            }
+
+            NetworkRequest response = gson.fromJson(event.getMessageAsString(), NetworkRequest.class);
+            Server server = servers.get(sender);
+
+            server.setOnline(true);
+
+            if (response.getType().equalsIgnoreCase("schedule")) {
+                server.setGameChannel(response.getChannel());
+                server.setPlaceholders(response.getData());
+            }
         } catch (UnsupportedEncodingException ex) {
             throw new RuntimeException("Error while listening to Lilypad messages:\n" + ex.getLocalizedMessage(), ex);
         }

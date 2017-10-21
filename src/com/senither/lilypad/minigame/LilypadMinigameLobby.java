@@ -1,5 +1,6 @@
 package com.senither.lilypad.minigame;
 
+import com.senither.lilypad.minigame.config.ConfigurationManager;
 import com.senither.lilypad.minigame.network.NetworkManager;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import lilypad.client.connect.api.Connect;
@@ -12,6 +13,7 @@ public class LilypadMinigameLobby extends JavaPlugin {
 
     private Connect connect;
     private NetworkManager network;
+    private ConfigurationManager config;
 
     @Override
     public void onEnable() {
@@ -22,6 +24,7 @@ public class LilypadMinigameLobby extends JavaPlugin {
             return;
         }
 
+        config = new ConfigurationManager(this);
         connect = getServer().getServicesManager().getRegistration(Connect.class).getProvider();
         connect.registerEvents(network = new NetworkManager(this));
     }

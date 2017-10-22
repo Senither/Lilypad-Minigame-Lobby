@@ -25,15 +25,19 @@ public class Envoyer {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static List<String> colorize(List<String> messages) {
+    public static List<String> colorize(List<String> messages, char defaultColor) {
         List<String> message = new ArrayList<>();
         for (String str : messages) {
             if (str == null) {
                 continue;
             }
-            message.add(colorize("&7" + str));
+            message.add(colorize("&" + defaultColor + str));
         }
         return message;
+    }
+
+    public static List<String> colorize(List<String> messages) {
+        return colorize(messages, '7');
     }
 
     public static String decolorize(String message) {

@@ -1,5 +1,6 @@
 package com.senither.lilypad.minigame.commands;
 
+import com.senither.lilypad.minigame.commands.setup.SetupInstance;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.entity.Player;
 

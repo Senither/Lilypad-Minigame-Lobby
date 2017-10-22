@@ -3,7 +3,8 @@ package com.senither.lilypad.minigame.listeners;
 import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
 import com.senither.lilypad.minigame.boards.GameLocation;
-import com.senither.lilypad.minigame.commands.SetupInstance;
+import com.senither.lilypad.minigame.commands.setup.SetupInstance;
+import com.senither.lilypad.minigame.commands.setup.SetupStage;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -49,22 +50,22 @@ public class PlayerListener implements Listener {
                 return;
             }
 
-            SetupInstance si = plugin.getCommand().getSetupInstance(e.getPlayer().getName());
-            if (si == null) {
+            SetupInstance setup = plugin.getCommand().getSetupInstance(e.getPlayer().getName());
+            if (setup == null) {
                 return;
             }
 
-            if (!si.getStage().equals(SetupInstance.SetupStage.BOARD)) {
+            if (!setup.getStage().equals(SetupStage.BOARD)) {
                 return;
             }
 
             GameLocation gameLoc = new GameLocation(block.getLocation());
 
             if (e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-                si.setFirstLocation(gameLoc);
+                setup.setFirstLocation(gameLoc);
                 Envoyer.sendMessage(e.getPlayer(), "&8[&a+&8] &aThe first location has now been set to:");
             } else {
-                si.setSecondLocation(gameLoc);
+                setup.setSecondLocation(gameLoc);
                 Envoyer.sendMessage(e.getPlayer(), "&8[&a+&8] &aThe second location has now been set to:");
             }
             Envoyer.sendMessage(e.getPlayer(), "&8[&a+&8] &a" + gameLoc.stringify());

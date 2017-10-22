@@ -1,6 +1,8 @@
 package com.senither.lilypad.minigame.commands;
 
 import com.senither.lilypad.minigame.boards.GameSignFormat;
+import com.senither.lilypad.minigame.commands.setup.SetupInstance;
+import com.senither.lilypad.minigame.commands.setup.SetupStage;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.entity.Player;
 
@@ -47,7 +49,7 @@ public class NextCommand extends AbstractCommand {
             return false;
         }
 
-        SetupInstance.SetupStage stage = instance.getStage().next(instance.getStage());
+        SetupStage stage = instance.getStage().next(instance.getStage());
         if (stage == null) {
             boolean created = command.getPlugin().getBoardManager().createGameWall(
                     instance.getName(),

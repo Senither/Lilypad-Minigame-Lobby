@@ -1,6 +1,9 @@
 package com.senither.lilypad.minigame;
 
+import com.senither.lilypad.minigame.boards.BoardManager;
+import com.senither.lilypad.minigame.commands.LilypadMinigameCommand;
 import com.senither.lilypad.minigame.config.ConfigurationManager;
+import com.senither.lilypad.minigame.listeners.PlayerListener;
 import com.senither.lilypad.minigame.network.NetworkManager;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import lilypad.client.connect.api.Connect;
@@ -13,7 +16,9 @@ public class LilypadMinigameLobby extends JavaPlugin {
 
     private Connect connect;
     private NetworkManager network;
+    private BoardManager boardManager;
     private ConfigurationManager config;
+    private LilypadMinigameCommand command;
 
     @Override
     public void onEnable() {
@@ -27,6 +32,10 @@ public class LilypadMinigameLobby extends JavaPlugin {
         config = new ConfigurationManager(this);
         connect = getServer().getServicesManager().getRegistration(Connect.class).getProvider();
         connect.registerEvents(network = new NetworkManager(this));
+        boardManager = new BoardManager(this);
+
+        getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        getCommand("lilypadminigame").setExecutor(command = new LilypadMinigameCommand(this));
     }
 
     @Override
@@ -40,5 +49,17 @@ public class LilypadMinigameLobby extends JavaPlugin {
 
     public NetworkManager getNetwork() {
         return network;
+    }
+
+    public BoardManager getBoardManager() {
+        return boardManager;
+    }
+
+    public ConfigurationManager getConfigurationManager() {
+        return config;
+    }
+
+    public LilypadMinigameCommand getCommand() {
+        return command;
     }
 }

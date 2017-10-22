@@ -56,6 +56,10 @@ public class NetworkManager {
         }
     }
 
+    public Map<String, Server> getServers() {
+        return servers;
+    }
+
     public void messageRequest(String channel, String message, List<String> servers) {
         try {
             this.reconnectToNetwork();

@@ -3,6 +3,7 @@ package com.senither.lilypad.minigame.commands;
 import com.senither.lilypad.minigame.boards.GameSignFormat;
 import com.senither.lilypad.minigame.commands.setup.SetupInstance;
 import com.senither.lilypad.minigame.commands.setup.SetupStage;
+import com.senither.lilypad.minigame.contracts.commands.AbstractCommand;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.entity.Player;
 

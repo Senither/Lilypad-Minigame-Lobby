@@ -1,5 +1,6 @@
-package com.senither.lilypad.minigame.commands;
+package com.senither.lilypad.minigame.contracts.commands;
 
+import com.senither.lilypad.minigame.commands.LilypadMinigameCommand;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.entity.Player;
 
@@ -8,25 +9,25 @@ import java.util.List;
 
 public abstract class AbstractCommand {
 
-    final LilypadMinigameCommand command;
-    final boolean isHelp;
-    final boolean isFallback;
+    protected final LilypadMinigameCommand command;
+    protected final boolean isHelp;
+    protected final boolean isFallback;
 
-    AbstractCommand(LilypadMinigameCommand command, boolean isHelp, boolean isFallback) {
+    public AbstractCommand(LilypadMinigameCommand command, boolean isHelp, boolean isFallback) {
         this.command = command;
         this.isHelp = isHelp;
         this.isFallback = isFallback;
     }
 
-    AbstractCommand(LilypadMinigameCommand command, boolean isHelp) {
+    public AbstractCommand(LilypadMinigameCommand command, boolean isHelp) {
         this(command, isHelp, false);
     }
 
-    AbstractCommand(LilypadMinigameCommand command) {
+    public AbstractCommand(LilypadMinigameCommand command) {
         this(command, false, false);
     }
 
-    boolean isHelpCommand() {
+    public boolean isHelpCommand() {
         return isHelp;
     }
 
@@ -38,7 +39,7 @@ public abstract class AbstractCommand {
 
     public abstract boolean onCommand(Player player, String[] args);
 
-    boolean printItems(Player player, HashMap<String, List<String>> items, List<String> keys) {
+    protected boolean printItems(Player player, HashMap<String, List<String>> items, List<String> keys) {
         for (String key : keys) {
             List<String> list = items.get(key);
 

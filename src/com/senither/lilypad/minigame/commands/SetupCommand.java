@@ -2,6 +2,7 @@ package com.senither.lilypad.minigame.commands;
 
 import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.commands.setup.SetupInstance;
+import com.senither.lilypad.minigame.contracts.commands.AbstractCommand;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

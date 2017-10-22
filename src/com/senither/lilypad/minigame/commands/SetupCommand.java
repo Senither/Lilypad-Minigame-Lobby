@@ -1,5 +1,6 @@
 package com.senither.lilypad.minigame.commands;
 
+import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +39,7 @@ public class SetupCommand extends AbstractCommand {
             command.getSetupPlayers().put(player.getName(), new SetupInstance(player.getName()));
 
             player.getInventory().clear();
-            player.getInventory().setItem(4, new ItemStack(command.getSelector()));
+            player.getInventory().setItem(4, new ItemStack(Constants.WALL_SELECTOR));
 
             Envoyer.sendMessage(player, "");
             Envoyer.sendMessage(player, "&2Stage #" + command.getSetupPlayers().get(player.getName()).getStage().getName());

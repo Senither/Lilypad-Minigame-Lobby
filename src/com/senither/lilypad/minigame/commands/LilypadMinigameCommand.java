@@ -2,13 +2,10 @@ package com.senither.lilypad.minigame.commands;
 
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
 import com.senither.lilypad.minigame.utils.Envoyer;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,7 +19,6 @@ public class LilypadMinigameCommand implements CommandExecutor {
 
     private final HashMap<String, SetupInstance> setupPlayers = new HashMap<>();
     private final HashMap<String, Long> timedcheck = new HashMap<>();
-    private final ItemStack selector;
 
     public LilypadMinigameCommand(LilypadMinigameLobby plugin) {
         this.plugin = plugin;
@@ -37,29 +33,6 @@ public class LilypadMinigameCommand implements CommandExecutor {
                 new ServersCommand(this),
                 new GameBoardCommand(this)
         );
-
-        this.selector = new ItemStack(Material.STICK, 1);
-        ItemMeta meta = this.selector.getItemMeta();
-
-        meta.setDisplayName(Envoyer.colorize("&a&lWall selector"));
-        meta.setLore(Envoyer.colorize(Arrays.asList(
-                "&7You can set the game walls",
-                "&7location by using &bleft click",
-                "&&7to set the first location,",
-                "&7and &bright click &7to set the",
-                "&7second location.",
-                "",
-                "&7Once you're done, type",
-                "&a/lilyserverlobby next",
-                "&7in the chat, and we'll start on",
-                "&7the next stage of the setup process"
-        )));
-
-        this.selector.setItemMeta(meta);
-    }
-
-    public ItemStack getSelector() {
-        return selector;
     }
 
     public SetupInstance getSetupInstance(String player) {

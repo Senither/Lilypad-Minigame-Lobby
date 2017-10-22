@@ -1,5 +1,6 @@
 package com.senither.lilypad.minigame.listeners;
 
+import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
 import com.senither.lilypad.minigame.boards.GameLocation;
 import com.senither.lilypad.minigame.commands.SetupInstance;
@@ -89,7 +90,7 @@ public class PlayerListener implements Listener {
         ItemMeta meta = item.getItemMeta();
 
         if (meta.hasDisplayName() && meta.hasLore()) {
-            return (meta.getDisplayName().equals(plugin.getCommand().getSelector().getItemMeta().getDisplayName()));
+            return (meta.getDisplayName().equals(Constants.WALL_SELECTOR.getItemMeta().getDisplayName()));
         }
         return false;
     }

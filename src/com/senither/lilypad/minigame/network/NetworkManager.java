@@ -1,6 +1,7 @@
 package com.senither.lilypad.minigame.network;
 
 import com.google.gson.Gson;
+import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import lilypad.client.connect.api.event.EventListener;
@@ -31,7 +32,7 @@ public class NetworkManager {
 
     @EventListener
     public void onLilyMessage(MessageEvent event) {
-        if (!event.getChannel().equals("Lilypad-Minigame")) {
+        if (!event.getChannel().equals(Constants.NETWORK_CHANNEL)) {
             return;
         }
 

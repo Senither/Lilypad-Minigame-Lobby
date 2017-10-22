@@ -13,22 +13,14 @@ public class Configuration {
 
     private final LilypadMinigameLobby plugin;
     private final String fileName;
-
     private File folder;
     private File configFile;
     private FileConfiguration fileConfiguration;
 
-    public Configuration(LilypadMinigameLobby plugin, String fileName) {
-        if (plugin == null) {
-            throw new IllegalArgumentException("plugin cannot be null");
-        }
-        if (!plugin.isEnabled()) {
-            throw new IllegalArgumentException("plugin must be initialized");
-        }
-
+    Configuration(LilypadMinigameLobby plugin, File folder, String fileName) {
         this.plugin = plugin;
         this.fileName = fileName;
-        this.folder = plugin.getDataFolder();
+        this.folder = folder;
         this.configFile = new File(folder, fileName);
 
         if (!configFile.exists()) {
@@ -57,7 +49,9 @@ public class Configuration {
     }
 
     public void saveConfig() {
-        if (fileConfiguration != null && configFile != null) {
+        if (fileConfiguration == null || configFile == null) {
+            return;
+        } else {
             try {
                 getConfig().save(configFile);
             } catch (IOException ex) {
@@ -70,5 +64,14 @@ public class Configuration {
         if (!configFile.exists()) {
             this.plugin.saveResource(fileName, false);
         }
+    }
+
+    public boolean contains(String... fields) {
+        for (String field : fields) {
+            if (!getConfig().contains(field)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

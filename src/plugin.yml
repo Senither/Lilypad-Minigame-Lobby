@@ -11,4 +11,4 @@ depend: [LilyPad-Connect]
 commands:
   lilypadminigame:
     description: Lilypad minigame lobby main command
-    aliases: [lilypadgame, minigamelobby, gamelobby]
+    aliases: [lilypadgame, minigamelobby, gamelobby, lilypadlobby, lilylobby]

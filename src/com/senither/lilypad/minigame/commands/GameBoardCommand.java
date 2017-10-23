@@ -26,25 +26,25 @@ public class GameBoardCommand extends AbstractCommand {
         }
 
         if (args.length <= 1) {
-            Envoyer.sendMessage(player, "&9[&b+&9&m]--&9[ &b&lLily Wall &9#&3" + board.getWallName());
+            Envoyer.sendMessage(player, "&9[&b+&9&m]--&9[ &b&lLilypad Minigame Wall &9#&3" + board.getWallName());
 
             // Channel
-            Envoyer.sendMessage(player, " &8/&bLilyLobby &9<&b" + board.getWallName() + "&9> &9<&bchannel&9> &9[&bnewChannelName&9]");
+            Envoyer.sendMessage(player, " &8/&bLilypadMinigame &9<&b" + board.getWallName() + "&9> &9<&bchannel&9> &9[&bnewChannelName&9]");
             Envoyer.sendMessage(player, " &b&l- &7Sets a new channel name for the board");
 
             // Format
-            Envoyer.sendMessage(player, " &8/&bLilyLobby &9<&b" + board.getWallName() + "&9> &9<&bformat&9> &9[&blineNumber&9] &9[&bformatText&9]");
+            Envoyer.sendMessage(player, " &8/&bLilypadMinigame &9<&b" + board.getWallName() + "&9> &9<&bformat&9> &9[&blineNumber&9] &9[&bformatText&9]");
             Envoyer.sendMessage(player, " &b&l- &7Sets a new channel name for the board");
 
             // Dump
-            Envoyer.sendMessage(player, " &8/&bLilyLobby &9<&b" + board.getWallName() + "&9> &9<&bdump&9>");
+            Envoyer.sendMessage(player, " &8/&bLilypadMinigame &9<&b" + board.getWallName() + "&9> &9<&bdump&9>");
             Envoyer.sendMessage(player, " &b&l- &7Dumps the game-wall objects information");
 
             return true;
         }
 
         if (args[1].equalsIgnoreCase("dump")) {
-            Envoyer.sendMessage(player, "&9[&b+&9&m]--&9[ &b&lLily Wall Dump for &9#&3" + board.getWallName());
+            Envoyer.sendMessage(player, "&9[&b+&9&m]--&9[ &b&Lilypad Minigame Wall Dump for &9#&3" + board.getWallName());
             Envoyer.sendMessage(player, " &9&l- &7Channel&9: &b" + board.getGameChannel());
             Envoyer.sendMessage(player, " &9&l- &7Format&9:");
 
@@ -56,7 +56,7 @@ public class GameBoardCommand extends AbstractCommand {
         } else if (args[1].equalsIgnoreCase("channel")) {
             if (args.length <= 2) {
                 Envoyer.sendMessage(player, " &cMissing arguments for the given command!");
-                Envoyer.sendMessage(player, " &4/LilyLobby &4<&c" + board.getWallName() + "&4> &4<&cchannel&4> &4[&cnewChannelName&4]");
+                Envoyer.sendMessage(player, " &4/LilypadMinigame &4<&c" + board.getWallName() + "&4> &4<&cchannel&4> &4[&cnewChannelName&4]");
                 return false;
             }
 
@@ -67,7 +67,7 @@ public class GameBoardCommand extends AbstractCommand {
         } else if (args[1].equalsIgnoreCase("format")) {
             if (args.length <= 3) {
                 Envoyer.sendMessage(player, " &cMissing arguments for the given command!");
-                Envoyer.sendMessage(player, " &4/LilyLobby &4<&c" + board.getWallName() + "&4> &4<&cformat&4> &4[&clineNumber&4] &4[&cformatText&4]");
+                Envoyer.sendMessage(player, " &4/LilypadMinigame &4<&c" + board.getWallName() + "&4> &4<&cformat&4> &4[&clineNumber&4] &4[&cformatText&4]");
                 return false;
             }
 
@@ -79,7 +79,7 @@ public class GameBoardCommand extends AbstractCommand {
                 }
             } catch (NumberFormatException ex) {
                 Envoyer.sendMessage(player, " &cInvalid number given, the line number has to be a valid number between 1 and 4!");
-                Envoyer.sendMessage(player, " &4/LilyLobby &4<&c" + board.getWallName() + "&4> &4<&cformat&4> &4[&clineNumber&4] &4[&cformatText&4]");
+                Envoyer.sendMessage(player, " &4/LilypadMinigame &4<&c" + board.getWallName() + "&4> &4<&cformat&4> &4[&clineNumber&4] &4[&cformatText&4]");
                 return false;
             }
 

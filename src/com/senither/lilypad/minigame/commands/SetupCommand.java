@@ -26,8 +26,8 @@ public class SetupCommand extends AbstractCommand {
         if (command.getSetupPlayers().containsKey(player.getName())) {
             Envoyer.sendMessage(player, "");
             Envoyer.sendMessage(player, " &7You're in the &aSetup &7mode!");
-            Envoyer.sendMessage(player, " &7Use /LilyServerLobby cancel &7to cancel the setup mode, or");
-            Envoyer.sendMessage(player, " &a/LilyLobby next &7to go to the next stage.");
+            Envoyer.sendMessage(player, " &7Use /LilypadMinigame cancel &7to cancel the setup mode, or");
+            Envoyer.sendMessage(player, " &a/LilypadMinigame next &7to go to the next stage.");
             Envoyer.sendMessage(player, "");
             return true;
         }
@@ -48,7 +48,7 @@ public class SetupCommand extends AbstractCommand {
             Envoyer.sendMessage(player, "");
             Envoyer.sendMessage(player, " &7You have now entered the &asetup &amode!");
             Envoyer.sendMessage(player, " &7Use your wall selector to create the sign wall.");
-            Envoyer.sendMessage(player, " &7When you're done, use &a/LilyServerLobby next");
+            Envoyer.sendMessage(player, " &7When you're done, use &a/LilypadMinigame next");
             Envoyer.sendMessage(player, " &7to go to the next stage.");
             Envoyer.sendMessage(player, "");
             return true;
@@ -69,8 +69,8 @@ public class SetupCommand extends AbstractCommand {
         Envoyer.sendMessage(player, " &a > &2&l2&a: &7Channeling, setting up the board channel listener.");
         Envoyer.sendMessage(player, " &a > &2&l3&a: &7Naming, giving the board a name.");
         Envoyer.sendMessage(player, "&7 More information will be provided for each stage once you get "
-                + "there; if you're sure you want to continue, use &b/LilyLobby Setup&7, you can cancel "
-                + "the setup process at anytime using &a/LilyLobby Cancel");
+                + "there; if you're sure you want to continue, use &b/LilypadMinigame Setup&7, you can cancel "
+                + "the setup process at anytime using &a/LilypadMinigame Cancel");
         Envoyer.sendMessage(player, "&7");
     }
 }

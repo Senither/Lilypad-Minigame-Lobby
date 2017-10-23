@@ -30,7 +30,7 @@ public class SetCommand extends AbstractCommand {
 
         if (args.length < 1) {
             Envoyer.sendMessage(player, "&c Invalid data set format!");
-            Envoyer.sendMessage(player, "&c /LilyLobby set &4<&cdata&4>");
+            Envoyer.sendMessage(player, "&c /LilypadMinigame set &4<&cdata&4>");
             return false;
         }
 

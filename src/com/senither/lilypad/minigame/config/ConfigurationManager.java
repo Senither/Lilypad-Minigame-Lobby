@@ -44,10 +44,10 @@ public class ConfigurationManager {
 
     public boolean createBoardConfiguration(GameWall board) {
         Configuration config = new Configuration(plugin, folder,
-                board.getWallName().toLowerCase().replace(" ", "_") + ".yml"
+                board.getName().toLowerCase().replace(" ", "_") + ".yml"
         );
 
-        config.getConfig().set("name", board.getWallName());
+        config.getConfig().set("name", board.getName());
         config.getConfig().set("locations.first", board.getFirstLocation().toString());
         config.getConfig().set("locations.second", board.getSecondLocation().toString());
         config.getConfig().set("channel", board.getGameChannel());

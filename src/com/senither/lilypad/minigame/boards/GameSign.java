@@ -14,9 +14,6 @@ public class GameSign {
         this.location = new GameLocation(location);
     }
 
-    /**
-     * @return the location
-     */
     public Location getLocation() {
         return location.getBukkitLocation();
     }

@@ -20,7 +20,7 @@ public class BoardsCommand extends AbstractCommand {
 
     @Override
     public boolean onCommand(Player player, String[] args) {
-        Envoyer.sendMessage(player, "&9[&b+&9&m]--&9[ &b&lLily Minigame Walls/Boards");
+        Envoyer.sendMessage(player, "&9[&b+&9&m]--&9[ &b&lLilypad Minigame Boards");
 
         HashMap<String, List<String>> walls = new HashMap<>();
 
@@ -32,7 +32,7 @@ public class BoardsCommand extends AbstractCommand {
                 walls.put(channel, new ArrayList<String>());
             }
 
-            walls.get(channel).add("&7" + wall.getWallName() + " &9(&b" + wall.getSigns().size() + "&9)");
+            walls.get(channel).add("&7" + wall.getName() + " &9(&b" + wall.getSigns().size() + "&9)");
         }
 
         List<String> wallKeys = new ArrayList<>(walls.keySet());

@@ -40,13 +40,13 @@ public class SetCommand extends AbstractCommand {
         switch (instance.getStage()) {
             case CHANNEL:
                 instance.setGameChannel(args[0].toLowerCase());
-                Envoyer.sendMessage(player, " &7The game wall will now listen for servers on the channel &a" + args[0] + "!");
+                Envoyer.sendMessage(player, " &7The game board will now listen for servers on the channel &a" + args[0] + "!");
                 break;
             case NAME:
                 instance.setName(args[0]);
 
                 if (command.getPlugin().getBoardManager().getBoard(args[0]) == null) {
-                    Envoyer.sendMessage(player, " &7The wall will now store data under the name &a" + args[0] + "&7!");
+                    Envoyer.sendMessage(player, " &7The board will now store data under the name &a" + args[0] + "&7!");
                 } else {
                     Envoyer.sendMessage(player, " &4" + args[0] + " &cis already taken, please use another name!");
                 }

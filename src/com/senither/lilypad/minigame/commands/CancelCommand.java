@@ -30,7 +30,7 @@ public class CancelCommand extends AbstractCommand {
         command.getSetupPlayers().remove(player.getName());
 
         Envoyer.sendMessage(player, "");
-        Envoyer.sendMessage(player, " &7You have &ccanceled &7your game wall setup!");
+        Envoyer.sendMessage(player, " &7You have &ccanceled &7your game board setup!");
         Envoyer.sendMessage(player, "");
 
         player.getInventory().clear();

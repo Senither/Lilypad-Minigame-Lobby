@@ -15,7 +15,7 @@ public class GameWall {
 
     private final BoardManager bm;
 
-    private final String wallName;
+    private final String name;
     private final GameSignFormat format;
     private final List<GameSign> signs = new ArrayList<>();
     private final GameLocation firstLocation;
@@ -25,7 +25,7 @@ public class GameWall {
     public GameWall(BoardManager bm, String wallName, GameSignFormat format, GameLocation first, GameLocation second) {
         this.bm = bm;
 
-        this.wallName = wallName;
+        this.name = wallName;
         this.format = format;
 
         this.firstLocation = first;
@@ -83,8 +83,8 @@ public class GameWall {
         }
     }
 
-    public String getWallName() {
-        return wallName;
+    public String getName() {
+        return name;
     }
 
     public GameSignFormat getFormat() {

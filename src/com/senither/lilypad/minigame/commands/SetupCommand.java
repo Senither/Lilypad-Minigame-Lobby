@@ -47,7 +47,7 @@ public class SetupCommand extends AbstractCommand {
             Envoyer.sendMessage(player, "&2Stage #" + command.getSetupPlayers().get(player.getName()).getStage().getName());
             Envoyer.sendMessage(player, "");
             Envoyer.sendMessage(player, " &7You have now entered the &asetup &amode!");
-            Envoyer.sendMessage(player, " &7Use your wall selector to create the sign wall.");
+            Envoyer.sendMessage(player, " &7Use your board selector to create the sign board.");
             Envoyer.sendMessage(player, " &7When you're done, use &a/LilypadMinigame next");
             Envoyer.sendMessage(player, " &7to go to the next stage.");
             Envoyer.sendMessage(player, "");
@@ -62,8 +62,8 @@ public class SetupCommand extends AbstractCommand {
         command.getTimedcheck().put(player.getName(), System.currentTimeMillis() + 8 * 1000);
         Envoyer.sendMessage(player, "&7");
         Envoyer.sendMessage(player, "&7 "
-                + "You're about to enter the &aGame Wall Setup Mode&7! This will clear your inventory and "
-                + "give you the wall selector power tool, once you enter the setup mode you'll have to go "
+                + "You're about to enter the &aGame Board Setup Mode&7! This will clear your inventory and "
+                + "give you the board selector power tool, once you enter the setup mode you'll have to go "
                 + "through three stages.");
         Envoyer.sendMessage(player, " &a > &2&l1&a: &7Board selection, creating the sign board.");
         Envoyer.sendMessage(player, " &a > &2&l2&a: &7Channeling, setting up the board channel listener.");

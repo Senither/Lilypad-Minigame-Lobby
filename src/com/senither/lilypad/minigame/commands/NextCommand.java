@@ -72,7 +72,7 @@ public class NextCommand extends AbstractCommand {
                 command.getSetupPlayers().remove(player.getName());
                 Envoyer.sendMessage(player, "");
                 Envoyer.sendMessage(player, " &7You're now &adone!");
-                Envoyer.sendMessage(player, " &7The wall has been setup successfully under the name &a" + instance.getName() + "!");
+                Envoyer.sendMessage(player, " &7The board has been setup successfully under the name &a" + instance.getName() + "!");
                 Envoyer.sendMessage(player, "");
                 return true;
             }
@@ -92,10 +92,10 @@ public class NextCommand extends AbstractCommand {
 
         switch (stage) {
             case CHANNEL:
-                Envoyer.sendMessage(player, " &7Setup the channel the wall should be listening on, by default the wall will listen on th &bglobal &7channel, allowing all servers to be displayed on it; If you want to set custom channel, use the following format: &a/LilypadMinigame set &2[&achannelName&2]");
+                Envoyer.sendMessage(player, " &7Setup the channel the board should be listening on, by default the board will listen on th &bglobal &7channel, allowing all servers to be displayed on it; If you want to set custom channel, use the following format: &a/LilypadMinigame set &2[&achannel name&2]");
                 break;
             case NAME:
-                Envoyer.sendMessage(player, " &7Great! You're almost done, all you need now is to give the wall a name, so we can store and fetch data from/to it. To give the wall a name, simply use the following syntax: &a/LilypadMinigame set &2[&awallName&2]");
+                Envoyer.sendMessage(player, " &7Great! You're almost done, all you need now is to give the board a name, so we can store and fetch data from/to it. To give the board a name, simply use the following syntax: &a/LilypadMinigame set &2[&aboard name&2]");
                 break;
         }
 

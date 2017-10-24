@@ -66,15 +66,20 @@ public class GameBoard {
                 }
 
                 if (!list.isEmpty()) {
+                    if (sign.hasMetadata("MinigameBoardSignOffline")) {
+                        sign.removeMetadata("MinigameBoardSignOffline", bm.getPlugin());
+                    }
+
                     Server server = list.remove(0);
                     List<String> signText = format.buildFrom(server.getName(), server.getPlaceholders());
 
-                    sign.setMetadata("LilyServerName", new FixedMetadataValue(bm.getPlugin(), server.getName()));
+                    sign.setMetadata("MinigameBoardSign", new FixedMetadataValue(bm.getPlugin(), server.getName()));
                     writeToSign(sign, signText);
                 } else {
-                    if (sign.hasMetadata("LilyServerName")) {
-                        sign.removeMetadata("LilyServerName", bm.getPlugin());
+                    if (sign.hasMetadata("MinigameBoardSign")) {
+                        sign.removeMetadata("MinigameBoardSign", bm.getPlugin());
                     }
+                    sign.setMetadata("MinigameBoardSignOffline", new FixedMetadataValue(bm.getPlugin(), "offline"));
                     writeToSign(sign, "", "&cThe server is", "&cOFFLINE", "");
                 }
             }

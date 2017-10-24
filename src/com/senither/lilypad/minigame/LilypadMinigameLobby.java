@@ -3,6 +3,7 @@ package com.senither.lilypad.minigame;
 import com.senither.lilypad.minigame.boards.BoardManager;
 import com.senither.lilypad.minigame.commands.LilypadMinigameCommand;
 import com.senither.lilypad.minigame.config.ConfigurationManager;
+import com.senither.lilypad.minigame.listeners.BlockListener;
 import com.senither.lilypad.minigame.listeners.PlayerListener;
 import com.senither.lilypad.minigame.network.NetworkManager;
 import com.senither.lilypad.minigame.utils.Envoyer;
@@ -34,6 +35,7 @@ public class LilypadMinigameLobby extends JavaPlugin {
         connect.registerEvents(network = new NetworkManager(this));
         boardManager = new BoardManager(this);
 
+        getServer().getPluginManager().registerEvents(new BlockListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getCommand("lilypadminigame").setExecutor(command = new LilypadMinigameCommand(this));
     }

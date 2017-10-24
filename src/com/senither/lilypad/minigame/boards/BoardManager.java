@@ -20,8 +20,8 @@ public class BoardManager implements Runnable {
     }
 
     public String getServerFromSign(Block block) {
-        if (block.hasMetadata("LilyServerName")) {
-            return block.getMetadata("LilyServerName").get(0).asString();
+        if (block.hasMetadata("MinigameBoardSign")) {
+            return block.getMetadata("MinigameBoardSign").get(0).asString();
         }
         return null;
     }

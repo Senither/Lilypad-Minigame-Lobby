@@ -27,55 +27,38 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = false, priority = EventPriority.HIGH)
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-            Block block = e.getClickedBlock();
-            if (block != null && !e.getPlayer().isSneaking() && block.getState() instanceof Sign) {
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+            Block block = event.getClickedBlock();
+            if (block != null && !event.getPlayer().isSneaking() && block.getState() instanceof Sign) {
                 String server = plugin.getBoardManager().getServerFromSign(block);
                 if (server != null) {
-                    plugin.getNetwork().teleportRequest(e.getPlayer().getName(), server);
+                    plugin.getNetwork().teleportRequest(event.getPlayer().getName(), server);
                 }
             }
 
-            ItemStack item = e.getItem();
-            if (item == null) {
-                return;
-            }
-
-            if (block == null) {
-                return;
-            }
-
-            if (!isWallSelector(item)) {
-                return;
-            }
-
-            SetupInstance setup = plugin.getCommand().getSetupInstance(e.getPlayer().getName());
-            if (setup == null) {
-                return;
-            }
-
-            if (!setup.getStage().equals(SetupStage.BOARD)) {
+            SetupInstance setupInstance = getSetupInstanceIfEventIsValid(event);
+            if (setupInstance == null) {
                 return;
             }
 
             GameLocation gameLoc = new GameLocation(block.getLocation());
 
-            if (e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-                setup.setFirstLocation(gameLoc);
-                Envoyer.sendMessage(e.getPlayer(), "&8[&a+&8] &aThe first location has now been set to:");
+            if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+                setupInstance.setFirstLocation(gameLoc);
+                Envoyer.sendMessage(event.getPlayer(), "&8[&a+&8] &aThe first location has now been set to:");
             } else {
-                setup.setSecondLocation(gameLoc);
-                Envoyer.sendMessage(e.getPlayer(), "&8[&a+&8] &aThe second location has now been set to:");
+                setupInstance.setSecondLocation(gameLoc);
+                Envoyer.sendMessage(event.getPlayer(), "&8[&a+&8] &aThe second location has now been set to:");
             }
-            Envoyer.sendMessage(e.getPlayer(), "&8[&a+&8] &a" + gameLoc.stringify());
+            Envoyer.sendMessage(event.getPlayer(), "&8[&a+&8] &a" + gameLoc.stringify());
         }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if (e.getItemDrop() != null && isWallSelector(e.getItemDrop().getItemStack())) {
-            e.setCancelled(true);
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        if (event.getItemDrop() != null && isWallSelector(event.getItemDrop().getItemStack())) {
+            event.setCancelled(true);
         }
     }
 
@@ -90,9 +73,16 @@ public class PlayerListener implements Listener {
 
         ItemMeta meta = item.getItemMeta();
 
-        if (meta.hasDisplayName() && meta.hasLore()) {
-            return (meta.getDisplayName().equals(Constants.WALL_SELECTOR.getItemMeta().getDisplayName()));
+        return meta.hasDisplayName() && meta.hasLore() &&
+                (meta.getDisplayName().equals(Constants.WALL_SELECTOR.getItemMeta().getDisplayName()));
+    }
+
+    private SetupInstance getSetupInstanceIfEventIsValid(PlayerInteractEvent event) {
+        if (event.getItem() == null || !isWallSelector(event.getItem()) || event.getClickedBlock() == null) {
+            return null;
         }
-        return false;
+
+        SetupInstance setup = plugin.getCommand().getSetupInstance(event.getPlayer().getName());
+        return setup != null && setup.getStage().equals(SetupStage.BOARD) ? setup : null;
     }
 }

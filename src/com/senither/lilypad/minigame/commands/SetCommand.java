@@ -42,15 +42,11 @@ public class SetCommand extends AbstractCommand {
                 instance.setGameChannel(args[0].toLowerCase());
                 Envoyer.sendMessage(player, " &7The game board will now listen for servers on the channel &a" + args[0] + "!");
                 break;
-            case NAME:
-                instance.setName(args[0]);
 
-                if (command.getPlugin().getBoardManager().getBoard(args[0]) == null) {
-                    Envoyer.sendMessage(player, " &7The board will now store data under the name &a" + args[0] + "&7!");
-                } else {
-                    Envoyer.sendMessage(player, " &4" + args[0] + " &cis already taken, please use another name!");
-                }
+            case NAME:
+                Envoyer.sendMessage(player, getNameStatusMessage(instance, args[0]));
                 break;
+
             default:
                 Envoyer.sendMessage(player, "&c You can't use this command in this setup stage!");
                 break;
@@ -58,5 +54,13 @@ public class SetCommand extends AbstractCommand {
         Envoyer.sendMessage(player, "");
 
         return true;
+    }
+
+    private String getNameStatusMessage(SetupInstance instance, String boardName) {
+        if (command.getPlugin().getBoardManager().getBoard(boardName) == null) {
+            instance.setName(boardName);
+            return " &7The board will now store data under the name &a" + boardName + "&7!";
+        }
+        return " &4" + boardName + " &cis already taken, please use another name!";
     }
 }

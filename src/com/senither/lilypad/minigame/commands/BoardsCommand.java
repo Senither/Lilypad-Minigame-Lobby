@@ -1,6 +1,6 @@
 package com.senither.lilypad.minigame.commands;
 
-import com.senither.lilypad.minigame.boards.GameWall;
+import com.senither.lilypad.minigame.boards.GameBoard;
 import com.senither.lilypad.minigame.contracts.commands.AbstractCommand;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.entity.Player;
@@ -24,7 +24,7 @@ public class BoardsCommand extends AbstractCommand {
 
         HashMap<String, List<String>> walls = new HashMap<>();
 
-        for (GameWall wall : command.getPlugin().getBoardManager().getBoards().values()) {
+        for (GameBoard wall : command.getPlugin().getBoardManager().getBoards().values()) {
             String channel = wall.getGameChannel().toUpperCase().substring(0, 1)
                     + wall.getGameChannel().toLowerCase().substring(1, wall.getGameChannel().length());
 

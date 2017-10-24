@@ -10,8 +10,8 @@ import java.util.List;
 public abstract class AbstractCommand {
 
     protected final LilypadMinigameCommand command;
-    protected final boolean isHelp;
-    protected final boolean isFallback;
+    private final boolean isHelp;
+    private final boolean isFallback;
 
     public AbstractCommand(LilypadMinigameCommand command, boolean isHelp, boolean isFallback) {
         this.command = command;

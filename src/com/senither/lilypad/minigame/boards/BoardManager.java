@@ -10,7 +10,7 @@ import java.util.Map;
 public class BoardManager implements Runnable {
 
     private final LilypadMinigameLobby plugin;
-    private final HashMap<String, GameWall> walls = new HashMap<>();
+    private final HashMap<String, GameBoard> boards = new HashMap<>();
 
     public BoardManager(LilypadMinigameLobby plugin) {
         this.plugin = plugin;
@@ -28,24 +28,24 @@ public class BoardManager implements Runnable {
 
     @Override
     public void run() {
-        if (walls.isEmpty()) {
+        if (boards.isEmpty()) {
             return;
         }
 
         Map<String, Server> servers = plugin.getNetwork().getServers();
 
-        for (GameWall wall : walls.values()) {
+        for (GameBoard wall : boards.values()) {
             wall.update(servers);
         }
     }
 
-    public boolean createGameWall(String wallName, GameSignFormat format, GameLocation first, GameLocation second, boolean createConfig) {
-        wallName = wallName.toLowerCase();
-        if (walls.containsKey(wallName)) {
+    public boolean createGameBoard(String name, GameSignFormat format, GameLocation first, GameLocation second, boolean createConfig) {
+        name = name.toLowerCase();
+        if (boards.containsKey(name)) {
             return false;
         }
-        GameWall game = new GameWall(this, wallName, format, first, second);
-        walls.put(wallName, game);
+        GameBoard game = new GameBoard(this, name, format, first, second);
+        boards.put(name, game);
 
         if (createConfig) {
             plugin.getConfigurationManager().createBoardConfiguration(game);
@@ -54,18 +54,19 @@ public class BoardManager implements Runnable {
         return true;
     }
 
-    public boolean createGameWall(String wallName, GameSignFormat format, GameLocation first, GameLocation second) {
-        return createGameWall(wallName, format, first, second, false);
+    public boolean createGameBoard(String name, GameSignFormat format, GameLocation first, GameLocation second) {
+        return createGameBoard(name, format, first, second, false);
     }
 
-    public boolean createGameWall(String wallName, String channel, GameSignFormat format, GameLocation first, GameLocation second, boolean createConfig) {
-        wallName = wallName.toLowerCase();
-        if (walls.containsKey(wallName)) {
+    public boolean createGameBoard(String name, String channel, GameSignFormat format, GameLocation first, GameLocation second, boolean createConfig) {
+        name = name.toLowerCase();
+        if (boards.containsKey(name)) {
             return false;
         }
-        GameWall game = new GameWall(this, wallName, format, first, second);
+
+        GameBoard game = new GameBoard(this, name, format, first, second);
         game.setGameChannel(channel);
-        walls.put(wallName, game);
+        boards.put(name, game);
 
         if (createConfig) {
             plugin.getConfigurationManager().createBoardConfiguration(game);
@@ -74,22 +75,22 @@ public class BoardManager implements Runnable {
         return true;
     }
 
-    public boolean createGameWall(String wallName, String channel, GameSignFormat format, GameLocation first, GameLocation second) {
-        return createGameWall(wallName, channel, format, first, second, false);
+    public boolean createGameBoard(String wallName, String channel, GameSignFormat format, GameLocation first, GameLocation second) {
+        return createGameBoard(wallName, channel, format, first, second, false);
     }
 
     public LilypadMinigameLobby getPlugin() {
         return plugin;
     }
 
-    public HashMap<String, GameWall> getBoards() {
-        return walls;
+    public HashMap<String, GameBoard> getBoards() {
+        return boards;
     }
 
-    public GameWall getBoard(String board) {
+    public GameBoard getBoard(String board) {
         board = board.toLowerCase();
-        if (walls.containsKey(board)) {
-            return walls.get(board);
+        if (boards.containsKey(board)) {
+            return boards.get(board);
         }
         return null;
     }

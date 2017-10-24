@@ -33,55 +33,12 @@ public class NextCommand extends AbstractCommand {
 
         SetupInstance instance = command.getSetupPlayers().get(player.getName());
         if (!instance.validate()) {
-
-            Envoyer.sendMessage(player, "");
-            switch (instance.getStage()) {
-                case BOARD:
-                    Envoyer.sendMessage(player, "&c You must set both locations before you can proceed to the next stage!");
-                    break;
-                case CHANNEL:
-                    Envoyer.sendMessage(player, "&c You have to set a channel for the game wall! If you don't want to use a custom game channel, just use &4GLOBAL&c!");
-                    break;
-                case NAME:
-                    Envoyer.sendMessage(player, "&c You have to give the game wall a name so that it can be stored and loaded into/from a config, it will also make it a lot easier later on to find, edit or delete.");
-            }
-            Envoyer.sendMessage(player, "");
-
-            return false;
+            return sendInvalidStageMessage(player, instance);
         }
 
         SetupStage stage = instance.getStage().next(instance.getStage());
         if (stage == null) {
-            boolean created = command.getPlugin().getBoardManager().createGameWall(
-                    instance.getName(),
-                    new GameSignFormat(
-                            Arrays.asList(
-                                    "&1[&9{server}&1]",
-                                    "{playersOnline} / {playersMax}",
-                                    "",
-                                    "&oClick to Join"
-                            )
-                    ),
-                    instance.getFirstLocation(),
-                    instance.getSecondLocation(),
-                    true
-            );
-
-            if (created) {
-                player.getInventory().clear();
-                command.getSetupPlayers().remove(player.getName());
-                Envoyer.sendMessage(player, "");
-                Envoyer.sendMessage(player, " &7You're now &adone!");
-                Envoyer.sendMessage(player, " &7The board has been setup successfully under the name &a" + instance.getName() + "!");
-                Envoyer.sendMessage(player, "");
-                return true;
-            }
-
-            Envoyer.sendMessage(player, "");
-            Envoyer.sendMessage(player, " &cThe name seems to already be taken!");
-            Envoyer.sendMessage(player, " &cSomeone must've taken the name while you were creating your game board, please select a new name instead of &4" + instance.getName() + "&c!");
-            Envoyer.sendMessage(player, "");
-            return false;
+            return createBoardFromInstance(player, instance);
         }
 
         instance.setStage(stage);
@@ -104,5 +61,55 @@ public class NextCommand extends AbstractCommand {
         Envoyer.sendMessage(player, "");
 
         return true;
+    }
+
+    private boolean sendInvalidStageMessage(Player player, SetupInstance instance) {
+        Envoyer.sendMessage(player, "");
+        switch (instance.getStage()) {
+            case BOARD:
+                Envoyer.sendMessage(player, "&c You must set both locations before you can proceed to the next stage!");
+                break;
+            case CHANNEL:
+                Envoyer.sendMessage(player, "&c You have to set a channel for the game wall! If you don't want to use a custom game channel, just use &4GLOBAL&c!");
+                break;
+            case NAME:
+                Envoyer.sendMessage(player, "&c You have to give the game wall a name so that it can be stored and loaded into/from a config, it will also make it a lot easier later on to find, edit or delete.");
+        }
+        Envoyer.sendMessage(player, "");
+
+        return false;
+    }
+
+    private boolean createBoardFromInstance(Player player, SetupInstance instance) {
+        if (command.getPlugin().getBoardManager().getBoard(instance.getName()) != null) {
+            Envoyer.sendMessage(player, "");
+            Envoyer.sendMessage(player, " &cThe name seems to already be taken!");
+            Envoyer.sendMessage(player, " &cSomeone must've taken the name while you were creating your game board, please select a new name instead of &4" + instance.getName() + "&c!");
+            Envoyer.sendMessage(player, "");
+            return false;
+        }
+
+        player.getInventory().clear();
+        command.getSetupPlayers().remove(player.getName());
+
+        Envoyer.sendMessage(player, "");
+        Envoyer.sendMessage(player, " &7You're now &adone!");
+        Envoyer.sendMessage(player, " &7The board has been setup successfully under the name &a" + instance.getName() + "!");
+        Envoyer.sendMessage(player, "");
+
+        return command.getPlugin().getBoardManager().createGameBoard(
+                instance.getName(),
+                new GameSignFormat(
+                        Arrays.asList(
+                                "&1[&9{server}&1]",
+                                "{playersOnline} / {playersMax}",
+                                "",
+                                "&oClick to Join"
+                        )
+                ),
+                instance.getFirstLocation(),
+                instance.getSecondLocation(),
+                true
+        );
     }
 }

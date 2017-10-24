@@ -4,7 +4,7 @@ import com.senither.lilypad.minigame.LilypadMinigameLobby;
 import com.senither.lilypad.minigame.boards.BoardManager;
 import com.senither.lilypad.minigame.boards.GameLocation;
 import com.senither.lilypad.minigame.boards.GameSignFormat;
-import com.senither.lilypad.minigame.boards.GameWall;
+import com.senither.lilypad.minigame.boards.GameBoard;
 
 import java.io.File;
 
@@ -36,13 +36,13 @@ public class ConfigurationManager {
 
                     GameSignFormat format = new GameSignFormat(config.getConfig().getStringList("format"));
 
-                    boardsInstance.createGameWall(name, channel, format, first, second);
+                    boardsInstance.createGameBoard(name, channel, format, first, second);
                 }
             }
         }
     }
 
-    public boolean createBoardConfiguration(GameWall board) {
+    public boolean createBoardConfiguration(GameBoard board) {
         Configuration config = new Configuration(plugin, folder,
                 board.getName().toLowerCase().replace(" ", "_") + ".yml"
         );

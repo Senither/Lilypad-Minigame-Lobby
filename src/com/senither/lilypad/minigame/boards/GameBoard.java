@@ -11,7 +11,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.*;
 
-public class GameWall {
+public class GameBoard {
 
     private final BoardManager bm;
 
@@ -22,7 +22,7 @@ public class GameWall {
     private final GameLocation secondLocation;
     private String channel = "GLOBAL";
 
-    public GameWall(BoardManager bm, String wallName, GameSignFormat format, GameLocation first, GameLocation second) {
+    public GameBoard(BoardManager bm, String wallName, GameSignFormat format, GameLocation first, GameLocation second) {
         this.bm = bm;
 
         this.name = wallName;
@@ -65,10 +65,8 @@ public class GameWall {
                     continue;
                 }
 
-                Server server = null;
-
                 if (!list.isEmpty()) {
-                    server = list.remove(0);
+                    Server server = list.remove(0);
                     List<String> signText = format.buildFrom(server.getName(), server.getPlaceholders());
 
                     sign.setMetadata("LilyServerName", new FixedMetadataValue(bm.getPlugin(), server.getName()));
@@ -112,40 +110,23 @@ public class GameWall {
     }
 
     private void buildLocationsObject(GameLocation first, GameLocation second) {
-        int minx, maxx, miny, maxy, minz, maxz;
+        int minX = Math.min(first.getX(), second.getX());
+        int maxX = Math.max(first.getX(), second.getX());
 
-        if (first.getX() > second.getX()) {
-            minx = second.getX();
-            maxx = first.getX();
-        } else {
-            minx = first.getX();
-            maxx = second.getX();
-        }
+        int minY = Math.min(first.getY(), second.getY());
+        int maxY = Math.max(first.getY(), second.getY());
 
-        if (first.getY() > second.getY()) {
-            miny = second.getY();
-            maxy = first.getY();
-        } else {
-            miny = first.getY();
-            maxy = second.getY();
-        }
-
-        if (first.getZ() > second.getZ()) {
-            minz = second.getZ();
-            maxz = first.getZ();
-        } else {
-            minz = first.getZ();
-            maxz = second.getZ();
-        }
+        int minZ = Math.min(first.getZ(), second.getZ());
+        int maxZ = Math.max(first.getZ(), second.getZ());
 
         World world = Bukkit.getWorld(first.getWorld());
         if (world == null) {
             return;
         }
 
-        for (int y = maxy; y >= miny; y--) {
-            for (int x = minx; x <= maxx; x++) {
-                for (int z = minz; z <= maxz; z++) {
+        for (int y = maxY; y >= minY; y--) {
+            for (int x = minX; x <= maxX; x++) {
+                for (int z = minZ; z <= maxZ; z++) {
                     Location location = new Location(world, x, y, z);
                     Block block = location.getBlock();
 

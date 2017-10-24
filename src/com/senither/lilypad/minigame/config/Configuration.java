@@ -31,6 +31,13 @@ public class Configuration {
         this.fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
     }
 
+    public FileConfiguration getConfig() {
+        if (fileConfiguration == null) {
+            this.reloadConfig();
+        }
+        return fileConfiguration;
+    }
+
     public void reloadConfig() {
         if (configFile == null) {
             if (folder == null) {
@@ -41,12 +48,6 @@ public class Configuration {
         fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
     }
 
-    public FileConfiguration getConfig() {
-        if (fileConfiguration == null) {
-            this.reloadConfig();
-        }
-        return fileConfiguration;
-    }
 
     public void saveConfig() {
         if (fileConfiguration == null || configFile == null) {

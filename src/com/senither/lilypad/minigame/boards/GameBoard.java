@@ -1,5 +1,6 @@
 package com.senither.lilypad.minigame.boards;
 
+import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.network.Server;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.Bukkit;
@@ -66,20 +67,20 @@ public class GameBoard {
                 }
 
                 if (!list.isEmpty()) {
-                    if (sign.hasMetadata("MinigameBoardSignOffline")) {
-                        sign.removeMetadata("MinigameBoardSignOffline", bm.getPlugin());
+                    if (sign.hasMetadata(Constants.SIGN_META_OFFLINE)) {
+                        sign.removeMetadata(Constants.SIGN_META_OFFLINE, bm.getPlugin());
                     }
 
                     Server server = list.remove(0);
                     List<String> signText = format.buildFrom(server.getName(), server.getPlaceholders());
 
-                    sign.setMetadata("MinigameBoardSign", new FixedMetadataValue(bm.getPlugin(), server.getName()));
+                    sign.setMetadata(Constants.SIGN_META_ONLINE, new FixedMetadataValue(bm.getPlugin(), server.getName()));
                     writeToSign(sign, signText);
                 } else {
-                    if (sign.hasMetadata("MinigameBoardSign")) {
-                        sign.removeMetadata("MinigameBoardSign", bm.getPlugin());
+                    if (sign.hasMetadata(Constants.SIGN_META_ONLINE)) {
+                        sign.removeMetadata(Constants.SIGN_META_ONLINE, bm.getPlugin());
                     }
-                    sign.setMetadata("MinigameBoardSignOffline", new FixedMetadataValue(bm.getPlugin(), "offline"));
+                    sign.setMetadata(Constants.SIGN_META_OFFLINE, new FixedMetadataValue(bm.getPlugin(), "offline"));
                     writeToSign(sign, "", "&cThe server is", "&cOFFLINE", "");
                 }
             }

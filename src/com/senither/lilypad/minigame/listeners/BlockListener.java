@@ -1,5 +1,6 @@
 package com.senither.lilypad.minigame.listeners;
 
+import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
@@ -26,7 +27,7 @@ public class BlockListener implements Listener {
         }
 
         Sign sign = (Sign) event.getBlock().getState();
-        if (sign.hasMetadata("MinigameBoardSignOffline") || sign.hasMetadata("MinigameBoardSign")) {
+        if (sign.hasMetadata(Constants.SIGN_META_OFFLINE) || sign.hasMetadata(Constants.SIGN_META_ONLINE)) {
             if (!(event.getPlayer().isOp() && event.getPlayer().isSneaking())) {
                 event.setCancelled(true);
             }

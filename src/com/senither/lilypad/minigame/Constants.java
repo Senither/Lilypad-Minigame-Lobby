@@ -12,6 +12,9 @@ public class Constants {
     public static final ItemStack WALL_SELECTOR;
     public static final String NETWORK_CHANNEL = "Lilypad-Minigame";
 
+    public static final String SIGN_META_ONLINE = "MinigameBoardSign";
+    public static final String SIGN_META_OFFLINE = "MinigameBoardSignOffline";
+
     static {
         WALL_SELECTOR = new ItemStack(Material.STICK, 1);
         ItemMeta meta = WALL_SELECTOR.getItemMeta();

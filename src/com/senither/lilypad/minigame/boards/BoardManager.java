@@ -1,5 +1,6 @@
 package com.senither.lilypad.minigame.boards;
 
+import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
 import com.senither.lilypad.minigame.network.Server;
 import org.bukkit.block.Block;
@@ -20,8 +21,8 @@ public class BoardManager implements Runnable {
     }
 
     public String getServerFromSign(Block block) {
-        if (block.hasMetadata("MinigameBoardSign")) {
-            return block.getMetadata("MinigameBoardSign").get(0).asString();
+        if (block.hasMetadata(Constants.SIGN_META_ONLINE)) {
+            return block.getMetadata(Constants.SIGN_META_ONLINE).get(0).asString();
         }
         return null;
     }

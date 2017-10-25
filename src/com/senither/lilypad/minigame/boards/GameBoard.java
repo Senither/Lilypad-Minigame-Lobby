@@ -21,18 +21,25 @@ public class GameBoard {
     private final List<GameSign> signs = new ArrayList<>();
     private final GameLocation firstLocation;
     private final GameLocation secondLocation;
+
+    private boolean flip = false;
     private String channel = "GLOBAL";
 
-    public GameBoard(BoardManager bm, String wallName, GameSignFormat format, GameLocation first, GameLocation second) {
+    public GameBoard(BoardManager bm, String boardName, GameSignFormat format, GameLocation first, GameLocation second, boolean flip) {
         this.bm = bm;
+        this.flip = flip;
 
-        this.name = wallName;
+        this.name = boardName;
         this.format = format;
 
         this.firstLocation = first;
         this.secondLocation = second;
 
         this.buildLocationsObject(first, second);
+    }
+
+    public GameBoard(BoardManager bm, String boardName, GameSignFormat format, GameLocation first, GameLocation second) {
+        this(bm, boardName, format, first, second, false);
     }
 
     public void update(Map<String, Server> servers) {
@@ -115,6 +122,19 @@ public class GameBoard {
         this.channel = channel;
     }
 
+    public boolean isFlip() {
+        return flip;
+    }
+
+    public void setFlip(boolean flip) {
+        this.flip = flip;
+    }
+
+    public void reloadLocationObjects() {
+        signs.clear();
+        buildLocationsObject(firstLocation, secondLocation);
+    }
+
     private void buildLocationsObject(GameLocation first, GameLocation second) {
         int minX = Math.min(first.getX(), second.getX());
         int maxX = Math.max(first.getX(), second.getX());
@@ -131,16 +151,22 @@ public class GameBoard {
         }
 
         for (int y = maxY; y >= minY; y--) {
+            List<GameSign> gameSigns = new ArrayList<>();
             for (int x = minX; x <= maxX; x++) {
                 for (int z = minZ; z <= maxZ; z++) {
                     Location location = new Location(world, x, y, z);
                     Block block = location.getBlock();
 
                     if (block != null) {
-                        signs.add(new GameSign(location));
+                        gameSigns.add(new GameSign(location));
                     }
                 }
             }
+
+            if (flip) {
+                Collections.reverse(gameSigns);
+            }
+            signs.addAll(gameSigns);
         }
     }
 

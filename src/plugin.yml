@@ -1,6 +1,6 @@
 name: LilyPad-Minigame-Lobby
 main: com.senither.lilypad.minigame.LilypadMinigameLobby
-version: 0.1
+version: 0.2
 description: Dynamic lilypad lobby system for minigames
 
 author: Senither

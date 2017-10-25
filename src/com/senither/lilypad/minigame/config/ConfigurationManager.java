@@ -2,8 +2,6 @@ package com.senither.lilypad.minigame.config;
 
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
 import com.senither.lilypad.minigame.boards.BoardManager;
-import com.senither.lilypad.minigame.boards.GameLocation;
-import com.senither.lilypad.minigame.boards.GameSignFormat;
 import com.senither.lilypad.minigame.boards.GameBoard;
 
 import java.io.File;
@@ -22,21 +20,19 @@ public class ConfigurationManager {
         }
     }
 
+    public Configuration getConfigFromGameBoard(GameBoard gameBoard) {
+        return new Configuration(plugin, folder,
+                gameBoard.getName().toLowerCase().replace(" ", "_") + ".yml"
+        );
+    }
+
     public void loadBoards(BoardManager boardsInstance) {
         for (final File file : folder.listFiles()) {
             if (file.isFile()) {
                 Configuration config = new Configuration(plugin, folder, file.getName());
 
                 if (config.contains("name", "locations.first", "locations.second", "channel", "format")) {
-                    String name = config.getConfig().getString("name");
-                    String channel = config.getConfig().getString("channel");
-
-                    GameLocation first = new GameLocation(config.getConfig().getString("locations.first"));
-                    GameLocation second = new GameLocation(config.getConfig().getString("locations.second"));
-
-                    GameSignFormat format = new GameSignFormat(config.getConfig().getStringList("format"));
-
-                    boardsInstance.createGameBoard(name, channel, format, first, second);
+                    boardsInstance.createGameBoardFromConfig(config);
                 }
             }
         }
@@ -52,6 +48,7 @@ public class ConfigurationManager {
         config.getConfig().set("locations.second", board.getSecondLocation().toString());
         config.getConfig().set("channel", board.getGameChannel());
         config.getConfig().set("format", board.getFormat().getFormat());
+        config.getConfig().set("flip", false);
         config.saveConfig();
 
         return true;

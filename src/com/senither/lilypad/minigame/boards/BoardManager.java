@@ -2,6 +2,7 @@ package com.senither.lilypad.minigame.boards;
 
 import com.senither.lilypad.minigame.Constants;
 import com.senither.lilypad.minigame.LilypadMinigameLobby;
+import com.senither.lilypad.minigame.config.Configuration;
 import com.senither.lilypad.minigame.network.Server;
 import org.bukkit.block.Block;
 
@@ -38,6 +39,23 @@ public class BoardManager implements Runnable {
         for (GameBoard wall : boards.values()) {
             wall.update(servers);
         }
+    }
+
+    public boolean createGameBoardFromConfig(Configuration configuration) {
+        String name = configuration.getConfig().getString("name");
+        if (boards.containsKey(name)) {
+            return false;
+        }
+
+        GameLocation first = new GameLocation(configuration.getConfig().getString("locations.first"));
+        GameLocation second = new GameLocation(configuration.getConfig().getString("locations.second"));
+        GameSignFormat format = new GameSignFormat(configuration.getConfig().getStringList("format"));
+
+        GameBoard game = new GameBoard(this, name, format, first, second, configuration.getConfig().getBoolean("flip", false));
+        game.setGameChannel(configuration.getConfig().getString("channel", "global"));
+        boards.put(name, game);
+
+        return true;
     }
 
     public boolean createGameBoard(String name, GameSignFormat format, GameLocation first, GameLocation second, boolean createConfig) {

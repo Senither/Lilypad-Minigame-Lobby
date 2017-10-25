@@ -1,6 +1,7 @@
 package com.senither.lilypad.minigame.commands;
 
 import com.senither.lilypad.minigame.boards.GameBoard;
+import com.senither.lilypad.minigame.config.Configuration;
 import com.senither.lilypad.minigame.contracts.commands.AbstractCommand;
 import com.senither.lilypad.minigame.utils.Envoyer;
 import org.bukkit.entity.Player;
@@ -33,6 +34,9 @@ public class GameBoardCommand extends AbstractCommand {
             case "dump":
                 return displayDump(player, board);
 
+            case "flip":
+                return flip(player, board);
+
             case "channel":
                 return channel(player, board, args);
 
@@ -57,6 +61,10 @@ public class GameBoardCommand extends AbstractCommand {
         Envoyer.sendMessage(player, " &8/&bLilypadMinigame &9<&b" + board.getName() + "&9> &9<&bformat&9> &9[&bline number&9] &9[&bformat text&9]");
         Envoyer.sendMessage(player, " &b&l- &7Sets a new channel name for the board");
 
+        // Flip
+        Envoyer.sendMessage(player, " &8/&bLilypadMinigame &9<&b" + board.getName() + "&9> &9<&bflip&9>");
+        Envoyer.sendMessage(player, " &b&l- &7Flips the direction the signs are rendered in (left to right, or right to left)");
+
         // Dump
         Envoyer.sendMessage(player, " &8/&bLilypadMinigame &9<&b" + board.getName() + "&9> &9<&bdump&9>");
         Envoyer.sendMessage(player, " &b&l- &7Dumps the board objects information");
@@ -73,6 +81,19 @@ public class GameBoardCommand extends AbstractCommand {
         for (String line : board.getFormat().getFormat()) {
             Envoyer.sendMessage(player, " &b &r &b &r &9- Line &9#&3" + (lineIndex++) + "&9: &0" + line);
         }
+        return true;
+    }
+
+    private boolean flip(Player player, GameBoard board) {
+        board.setFlip(!board.isFlip());
+        board.reloadLocationObjects();
+
+        Configuration configuration = command.getPlugin().getConfigurationManager().getConfigFromGameBoard(board);
+        configuration.getConfig().set("flip", board.isFlip());
+        configuration.saveConfig();
+
+        Envoyer.sendMessage(player, " &b" + board.getName() + "'s &7sign render direction has been flipped.");
+
         return true;
     }
 

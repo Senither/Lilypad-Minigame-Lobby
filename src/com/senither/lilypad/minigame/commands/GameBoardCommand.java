@@ -23,6 +23,7 @@ public class GameBoardCommand extends AbstractCommand {
     public boolean onCommand(Player player, String[] args) {
         GameBoard board = command.getPlugin().getBoardManager().getBoard(args[0].toLowerCase());
         if (board == null) {
+            Envoyer.sendMessage(player, String.format("&4[&cError&4] &cInvalid board given, &4%s &cis not a valid game board.", args[0]));
             return false;
         }
 

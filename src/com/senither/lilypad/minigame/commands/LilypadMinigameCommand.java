@@ -18,6 +18,7 @@ public class LilypadMinigameCommand implements CommandExecutor {
     private final LilypadMinigameLobby plugin;
 
     private final List<AbstractCommand> commands;
+    private final AuthorCommand authorCommand;
 
     private final HashMap<String, SetupInstance> setupPlayers = new HashMap<>();
     private final HashMap<String, Long> timedcheck = new HashMap<>();
@@ -35,6 +36,7 @@ public class LilypadMinigameCommand implements CommandExecutor {
                 new ServersCommand(this),
                 new GameBoardCommand(this)
         );
+        this.authorCommand = new AuthorCommand(this);
     }
 
     public SetupInstance getSetupInstance(String player) {
@@ -64,11 +66,14 @@ public class LilypadMinigameCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        if (args.length > 0 && authorCommand.getTriggers().contains(args[0].toLowerCase())) {
+            return authorCommand.onCommand(player, args);
+        }
+
         if (!player.hasPermission("lilypadminigame.use")) {
             Envoyer.missingPermission(player, "lilypadminigame.use");
             return false;
         }
-
 
         if (args.length == 0) {
             for (AbstractCommand command : commands) {
@@ -89,6 +94,7 @@ public class LilypadMinigameCommand implements CommandExecutor {
                 return command.onCommand(player, args);
             }
         }
+
 
         return false;
     }
